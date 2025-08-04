@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [main]
   schedule:
-    - cron: '0 0 * * 0'
+    - cron: '0 0 * * 0'  # weekly
 
 jobs:
   analyze:
@@ -31,11 +31,9 @@ jobs:
         with:
           languages: ${{ matrix.language }}
 
-      - name: Build manually (javac)
+      - name: Compile Java code manually
         run: |
-          mkdir -p out
-          find . -name "*.java" > sources.txt
-          javac -d out @sources.txt
+          javac Hello.java
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
