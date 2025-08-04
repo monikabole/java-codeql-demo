@@ -2,9 +2,9 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ master ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ master ]
 
 jobs:
   analyze:
@@ -21,16 +21,16 @@ jobs:
         language: [ 'java' ]
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
-      with:
-        languages: ${{ matrix.language }}
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
 
-    - name: Build Java code
-      run: javac $(find src -name "*.java")
+      - name: Build Java code
+        run: javac $(find src -name "*.java")
 
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@v3
