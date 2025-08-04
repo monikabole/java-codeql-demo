@@ -2,16 +2,17 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [main]
+    branches: [ "main" ]
   pull_request:
-    branches: [main]
+    branches: [ "main" ]
   schedule:
-    - cron: '0 0 * * 0'  # weekly
+    - cron: '0 0 * * 0'
 
 jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
+
     permissions:
       actions: read
       contents: read
@@ -20,20 +21,21 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [java]
+        language: [ 'java' ]
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
-        with:
-          languages: ${{ matrix.language }}
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: ${{ matrix.language }}
 
-      - name: Compile Java code manually
-        run: |
-          javac Hello.java
+    - name: Compile Java code manually
+      run: |
+        mkdir -p out
+        javac -d out Hello.java
 
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
