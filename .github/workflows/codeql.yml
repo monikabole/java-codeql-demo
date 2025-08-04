@@ -32,10 +32,18 @@ jobs:
       with:
         languages: ${{ matrix.language }}
 
+    - name: Set up Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
     - name: Compile Java code manually
       run: |
-        mkdir -p out
-        javac -d out Hello.java
+        echo "Compiling Hello.java..."
+        mkdir -p classes
+        javac -d classes Hello.java
+        ls -R classes
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
