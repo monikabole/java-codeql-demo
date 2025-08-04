@@ -2,9 +2,9 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
   schedule:
     - cron: '0 0 * * 0'
 
@@ -27,21 +27,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
-        with:
-          languages: ${{ matrix.language }}
-
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Build (compile Hello.java)
-        run: |
-          echo "Building Java code..."
-          javac Hello.java
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+
+      # IMPORTANT: This is the build step CodeQL monitors!
+      - name: Compile Java files manually
+        run: javac Hello.java
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
