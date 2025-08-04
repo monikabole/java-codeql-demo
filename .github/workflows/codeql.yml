@@ -30,7 +30,7 @@ jobs:
         languages: ${{ matrix.language }}
 
     - name: Build Java code
-      run: javac src/*.java
+      run: javac $(find src -name "*.java")
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
